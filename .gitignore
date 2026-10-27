@@ -1,0 +1,9 @@
+data.json
+data.json.*
+.work/
+projects/
+node_modules/
+.window/
+ideaforge-error.log
+dist/
+.test-server.log
