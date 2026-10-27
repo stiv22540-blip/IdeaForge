@@ -548,6 +548,8 @@ const json = (res, code, obj) => { res.writeHead(code, { 'Content-Type': 'applic
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://localhost');
+  // защита от DNS rebinding: чужой домен, указывающий на 127.0.0.1, не прочитает идеи и пути проектов
+  if (!/^(localhost|127\.0\.0\.1)(:\d+)?$/.test(req.headers.host || '')) return json(res, 421, { error: 'bad host' });
   // принимаем запросы только со своей страницы: к агенту с полными правами не должен достучаться чужой сайт
   if (req.method === 'POST') {
     const origin = req.headers.origin || '';
